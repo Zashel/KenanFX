@@ -339,10 +339,10 @@ class ExternalId(object):
     def bill(self, ref_no):
         if ref_no in self.balances:
             return {
-                    "total_due": bill[ref_no].total_due/100,
-                    "total_adj": bill[ref_no].total_adj/100,
-                    "total_paid": bill[ref_no].total_paid/100,
-                    "balance_due": bill[ref_no].balance_due/100
+                    "total_due": self.balances[ref_no].total_due/100,
+                    "total_adj": self.balances[ref_no].total_adj/100,
+                    "total_paid": self.balances[ref_no].total_paid/100,
+                    "balance_due": self.balances[ref_no].balance_due/100
                     }
 
 class Balances(object):
