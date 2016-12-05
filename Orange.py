@@ -192,12 +192,19 @@ class App(object):
                             SERVERS[dato.server_id].lower()
                             ),
                     (subscr_no.subscr_no, subscr_no.subscr_no_resets)
-                    )   
+                    )
+            servicios = self.execute(
+                    "select * from cmf_package_component@{0} inner join component_definition_values@{0} on cmf_package_component.component_id = component_definition_values.component_id where parent_account_no = ?".format(
+                            SERVERS[dato.server_id].lower()
+                            ),
+                    (dato.account_no,)
+                    )
             if datos_finales.count > 0:
                 final[external_id] = {
                         "lookout": datos, 
                         "cmf": datos_finales,
-                        "phones": telefonos
+                        "phones": telefonos,
+                        "services": servicios
                         }
         return final #Devolver clase CUSTOMER
 
@@ -369,7 +376,7 @@ class Balances(object):
     @property
     def index(self):
         if self._index == None:
-            return [balance.bill_ref_no for bill in balances]
+            return [bill.bill_ref_no for bill in self._balances]
         else:
             return self._index
     
